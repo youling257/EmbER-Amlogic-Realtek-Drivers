@@ -30,7 +30,11 @@
 
 
 #ifdef CONFIG_NEW_SIGNAL_STAT_PROCESS
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 15, 0))
 void rtw_signal_stat_timer_hdl(RTW_TIMER_HDL_ARGS);
+#else
+void rtw_signal_stat_timer_hdl(struct timer_list *t);
+#endif
 
 enum {
 	SIGNAL_STAT_CALC_PROFILE_0 = 0,
@@ -139,8 +143,11 @@ sint _rtw_init_recv_priv(struct recv_priv *precvpriv, _adapter *padapter)
 	res = rtw_hal_init_recv_priv(padapter);
 
 #ifdef CONFIG_NEW_SIGNAL_STAT_PROCESS
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 15, 0))
 	rtw_init_timer(&precvpriv->signal_stat_timer, padapter, RTW_TIMER_HDL_NAME(signal_stat));
-
+#else
+	timer_setup(&precvpriv->signal_stat_timer, rtw_signal_stat_timer_hdl, 0);
+#endif
 	precvpriv->signal_stat_sampling_interval = 2000; /* ms */
 	/* precvpriv->signal_stat_converging_constant = 5000; */ /* ms */
 
@@ -3217,8 +3224,8 @@ void rtw_reordering_ctrl_timeout_handler(void *pcontext)
 
 	_enter_critical_bh(&ppending_recvframe_queue->lock, &irql);
 
-	if (preorder_ctrl)
-		preorder_ctrl->bReorderWaiting = _FALSE;
+//	if (preorder_ctrl)
+	preorder_ctrl->bReorderWaiting = _FALSE;
 
 	if (recv_indicatepkts_in_order(padapter, preorder_ctrl, _TRUE) == _TRUE)
 		_set_timer(&preorder_ctrl->reordering_ctrl_timer, REORDER_WAIT_TIME);
@@ -4209,9 +4216,17 @@ _recv_entry_drop:
 }
 
 #ifdef CONFIG_NEW_SIGNAL_STAT_PROCESS
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 15, 0))
 void rtw_signal_stat_timer_hdl(RTW_TIMER_HDL_ARGS)
+#else
+void rtw_signal_stat_timer_hdl(struct timer_list *t)
+#endif
 {
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 15, 0))
 	_adapter *adapter = (_adapter *)FunctionContext;
+#else
+	_adapter *adapter = from_timer(adapter, t, recvpriv.signal_stat_timer);
+#endif
 	struct recv_priv *recvpriv = &adapter->recvpriv;
 
 	u32 tmp_s, tmp_q;
