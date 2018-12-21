@@ -673,6 +673,8 @@ MPT_InitializeAdapter(
 	_rtw_init_sema(&pMptCtx->MPh2c_Sema, 0);
 #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 15, 0)
 	_init_timer(&pMptCtx->MPh2c_timeout_timer, pAdapter->pnetdev, MPh2c_timeout_handle, pAdapter);
+#else
+	timer_setup(&pMptCtx->MPh2c_timeout_timer, MPh2c_timeout_handle, 0);
 #endif
 #endif
 
