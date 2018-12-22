@@ -28,7 +28,7 @@
 /*<YuChen, 150720> Add for KFree Feature Requested by RF David.*/
 /*This is a phydm API*/
 
-void
+static void
 phydm_set_kfree_to_rf_8814a(
 	void		*p_dm_void,
 	u8		e_rf_path,
@@ -119,7 +119,7 @@ phydm_set_kfree_to_rf_8814a(
 }
 
 
-void
+static void
 phydm_set_kfree_to_rf(
 	void		*p_dm_void,
 	u8		e_rf_path,

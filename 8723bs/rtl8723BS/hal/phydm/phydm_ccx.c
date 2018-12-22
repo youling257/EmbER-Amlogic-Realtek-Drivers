@@ -285,7 +285,7 @@ phydm_check_nhm_ready(
 	return ret;
 }
 
-void
+static void
 phydm_store_nhm_setting(
 	void		*p_dm_void
 )
