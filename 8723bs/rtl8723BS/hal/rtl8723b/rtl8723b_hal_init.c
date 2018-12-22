@@ -6038,7 +6038,7 @@ void rtl8723b_stop_thread(_adapter *padapter)
 	if (xmitpriv->SdioXmitThread) {
 		_rtw_up_sema(&xmitpriv->SdioXmitSema);
 		_rtw_down_sema(&xmitpriv->SdioXmitTerminateSema);
-		xmitpriv->SdioXmitThread = 0;
+		xmitpriv->SdioXmitThread = NULL;
 	}
 #endif
 #endif
