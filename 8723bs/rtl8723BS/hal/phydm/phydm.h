@@ -1132,7 +1132,7 @@ phydm_support_ability_debug(
 	u32			*_out_len
 );
 
-void
+static void
 phydm_config_ofdm_rx_path(
 	struct PHY_DM_STRUCT		*p_dm_odm,
 	u32			path
@@ -1313,7 +1313,7 @@ phydm_api_debug(
 	u32		*_out_len
 );
 
-u8
+static u8
 phydm_csi_mask_setting(
 	void		*p_dm_void,
 	u32		enable,
