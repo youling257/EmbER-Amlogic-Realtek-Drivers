@@ -846,7 +846,7 @@ phydm_modify_RA_PCR_threshold(
 	ODM_RT_TRACE(p_dm_odm, ODM_COMP_RA_MASK, ODM_DBG_LOUD, ("Set RA_threshold_offset = (( %s%d ))\n", ((RA_threshold_offset == 0) ? " " : ((RA_offset_direction) ? "+" : "-")), RA_threshold_offset));
 }
 
-void
+static void
 odm_rssi_monitor_check_mp(
 	void	*p_dm_void
 )
@@ -1118,7 +1118,7 @@ odm_rssi_monitor_check_mp(
 
 #if (DM_ODM_SUPPORT_TYPE == ODM_CE)
 /*H2C_RSSI_REPORT*/
-s8 phydm_rssi_report(struct PHY_DM_STRUCT *p_dm_odm, u8 mac_id)
+static s8 phydm_rssi_report(struct PHY_DM_STRUCT *p_dm_odm, u8 mac_id)
 {
 	struct _ADAPTER *adapter = p_dm_odm->adapter;
 	struct _rate_adaptive_table_			*p_ra_table = &p_dm_odm->dm_ra_table;
@@ -1229,7 +1229,7 @@ s8 phydm_rssi_report(struct PHY_DM_STRUCT *p_dm_odm, u8 mac_id)
 	return _SUCCESS;
 }
 
-void phydm_ra_rssi_rpt_wk_hdl(void *p_context)
+static void phydm_ra_rssi_rpt_wk_hdl(void *p_context)
 {
 	struct PHY_DM_STRUCT	*p_dm_odm = (struct PHY_DM_STRUCT *)p_context;
 	int i;
@@ -1258,7 +1258,7 @@ void phydm_ra_rssi_rpt_wk(void *p_context)
 }
 #endif
 
-void
+static void
 odm_rssi_monitor_check_ce(
 	void		*p_dm_void
 )
@@ -1313,7 +1313,7 @@ odm_rssi_monitor_check_ce(
 }
 
 
-void
+static void
 odm_rssi_monitor_check_ap(
 	void		*p_dm_void
 )
@@ -1581,7 +1581,7 @@ odm_refresh_rate_adaptive_mask(
 
 }
 
-u8
+static u8
 phydm_trans_platform_bw(
 	void		*p_dm_void,
 	u8		BW
@@ -1645,7 +1645,7 @@ phydm_trans_platform_bw(
 
 }
 
-u8
+static u8
 phydm_trans_platform_rf_type(
 	void		*p_dm_void,
 	u8		rf_type
@@ -1740,7 +1740,7 @@ phydm_trans_platform_rf_type(
 
 }
 
-u32
+static u32
 phydm_trans_platform_wireless_mode(
 	void		*p_dm_void,
 	u32		wireless_mode
@@ -2525,7 +2525,7 @@ phydm_rate_order_compute(
 
 }
 
-void
+static void
 phydm_ra_common_info_update(
 	void	*p_dm_void
 )
@@ -2694,7 +2694,7 @@ odm_find_rts_rate(
 
 }
 
-void
+static void
 odm_set_ra_dm_arfb_by_noisy(
 	struct PHY_DM_STRUCT	*p_dm_odm
 )
@@ -3152,7 +3152,7 @@ phydm_get_rate_bitmap_ex(
 				if (*(p_dm_odm->p_band_width) == ODM_BW40M)
 					rate_bitmap = 0x0000000ffffff015;
 				else
-					rate_bitmap = 0x0000000ffffff005;
+					rate_bitmap = 0x000000ffffff005;
 			}
 		}
 	}
