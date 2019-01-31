@@ -853,7 +853,7 @@ void rtw_cfg80211_indicate_disconnect(_adapter *padapter, u16 reason, u8 locally
 
 	_enter_critical_bh(&pwdev_priv->connect_req_lock, &irqL);
 
-	if (padapter->ndev_unregistering || !rtw_wdev_not_indic_disco(pwdev_priv)) {
+	{
 		#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) || defined(COMPAT_KERNEL_RELEASE)
 		RTW_INFO("pwdev->sme_state(b)=%d\n", pwdev->sme_state);
 
